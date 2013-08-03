@@ -22,15 +22,14 @@
 from openerp.osv import fields, osv
 
 
-class account_voucher(osv.osv):
+class account_tax(osv.osv):
 
-    _name = 'account.voucher'
-    _description = 'Accounting Voucher'
-    _inherit = 'account.voucher'
+    _name = 'account.tax'
+    _inherit = 'account.tax'
 
     _columns = {
-	'retention_ids': fields.one2many('payment.retention','voucher_id','Retention IDs',readonly=True, states={'draft':[('readonly',False)]})
+	'retention_ids': fields.one2many('payment.retention','voucher_id','Retention IDs')
     }
 
-account_voucher()
+account_tax()
 

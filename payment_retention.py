@@ -25,12 +25,34 @@ class payment_retention(osv.osv):
     _name = 'payment.retention'
     _description = 'Payment Tax Retention'
 
+    def _get_retention_agent(self, cr, uid, ids, *a):
+	import pdb;pdb.set_trace()
+        res={}
+        for id in self.browse(cr, uid, ids):
+            if id.voucher_id:
+                res[id.id] = id.voucher_id.partner_id.name
+            else:
+                res[id.id] = ""
+        return res
+
+    def _get_retention_agent_cuit(self, cr, uid, ids, *a):
+        res={}
+        for id in self.browse(cr, uid, ids):
+            if id.voucher_id:
+                res[id.id] = id.voucher_id.partner_id.vat
+            else:
+                res[id.id] = ""
+        return res
+
+
     _columns = {
         'voucher_id': fields.many2one('account.voucher','id','Voucher ID'),
 	'certificate_nbr': fields.char('Certificate Number',size=32),
 	'amount': fields.float('Amount'),
-	'retention_agent': fields.char('Retention Agent',size=32),
-	'retention_agent_cuit': fields.char('Retention Agent CUIT',size=32)
+	'retention_agent': fields.function(_get_retention_agent,string='Retention Agent'),
+	'retention_agent_cuit': fields.function(_get_retention_agent_cuit,string='Retention Agent VAT'),
+	'tax_id': fields.many2one('account.tax','id','Tax ID'),
+	'state_id': fields.many2one('res.country.state','id','State ID')
     }
 
 payment_retention()

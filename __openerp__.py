@@ -29,8 +29,8 @@
     'images': [],
     'depends': ['account_voucher'],
     'demo': [],
-    'data': ['payment_retention_view.xml'],
-    # 'data': [],
+    # 'data': ['payment_retention_view.xml'],
+    'data': [],
     'test': [],
     'installable': True,
 }

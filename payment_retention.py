@@ -19,5 +19,20 @@
 #
 ##############################################################################
 
-import payment_retention
+from openerp.osv import fields, osv
+
+class payment_retention(osv.osv):
+    _name = 'payment.retention'
+    _description = 'Payment Tax Retention'
+
+    _columns = {
+        'voucher_id': fields.many2one('account.voucher','id','Voucher ID'),
+	'certificate_nbr': fields.char('Certificate Number',size=32),
+	'amount': fields.float('Amount'),
+	'retention_agent': fields.char('Retention Agent',size=32),
+	'retention_agent_cuit': fields.char('Retention Agent CUIT',size=32)
+    }
+
+payment_retention()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

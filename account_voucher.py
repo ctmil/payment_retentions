@@ -19,6 +19,18 @@
 #
 ##############################################################################
 
-import payment_retention
-import account_voucher
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+from openerp.osv import fields, osv
+
+
+class account_voucher(osv.osv):
+
+    _name = 'account.voucher'
+    _description = 'Accounting Voucher'
+    _inherit = 'account.voucher'
+
+    _columns = {
+	'retention_ids': fields.one2many('payment.retention','voucher_id','Retention IDs')
+    }
+
+account_voucher()
+

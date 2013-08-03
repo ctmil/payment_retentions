@@ -29,7 +29,7 @@
     'images': [],
     'depends': ['account_voucher'],
     'demo': [],
-    'data': [],
+    'data': ['payment_retention_view.xml'],
     # 'data': [],
     'test': [],
     'installable': True,

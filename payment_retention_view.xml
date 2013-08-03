@@ -5,7 +5,7 @@
 	<record model="ir.ui.view" id="payment_retention_form_view">
 	    <field name="name">payment_retention.form.inherit</field>
 	    <field name="model">account.voucher</field>
-	    <field name="inherit_id" ref="account_voucher.view_voucher_form"/>
+	    <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
 	    <field name="arch" type="xml">
 	        <data>
                         <page string="Payment Retentions">

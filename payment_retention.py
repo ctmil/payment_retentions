@@ -25,8 +25,7 @@ class payment_retention(osv.osv):
     _name = 'payment.retention'
     _description = 'Payment Tax Retention'
 
-    def _get_retention_agent(self, cr, uid, ids, *a):
-	import pdb;pdb.set_trace()
+    def _get_retention_agent(self, cr, uid, ids,field_name, args, context=None):
         res={}
         for id in self.browse(cr, uid, ids):
             if id.voucher_id:
@@ -35,7 +34,7 @@ class payment_retention(osv.osv):
                 res[id.id] = ""
         return res
 
-    def _get_retention_agent_cuit(self, cr, uid, ids, *a):
+    def _get_retention_agent_cuit(self, cr, uid, ids,field_name, args, context=None):
         res={}
         for id in self.browse(cr, uid, ids):
             if id.voucher_id:

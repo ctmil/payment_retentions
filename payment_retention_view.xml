@@ -10,11 +10,13 @@
 	      <notebook>
                         <page string="Payment Retentions">
                             <field name="retention_ids" >
-                              <tree string="Payment Retentions">
+                              <tree string="Payment Retentions" editable="bottom">
                                     <field name="certificate_nbr" />
                                     <field name="amount" />
-                                    <field name="retention_agent" readonly="1" />
-                                    <field name="retention_agent_cuit" readonly="1" />
+				    <field name="tax_id" string="Tax"/>
+				    <field name="state_id" string="State"/>
+                                    <!-- field name="retention_agent" readonly="1" />
+                                    <field name="retention_agent_cuit" readonly="1" / -->
                               </tree>
 			    </field>
 			</page>

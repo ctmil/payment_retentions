@@ -32,5 +32,60 @@ class account_voucher(osv.osv):
 	'retention_ids': fields.one2many('payment.retention','voucher_id','Retention IDs',readonly=True, states={'draft':[('readonly',False)]})
     }
 
+    def proforma_voucher(self, cr, uid, ids, context=None):
+        """ Creates the journal entries for the payment retentions lines """
+	
+        if context is None:
+            context = {}
+        move_pool = self.pool.get('account.move')
+        move_line_pool = self.pool.get('account.move.line')
+        for voucher in self.browse(cr, uid, ids, context=context):
+            company_currency = self._get_company_currency(cr, uid, voucher.id, context)
+            current_currency = self._get_current_currency(cr, uid, voucher.id, context)
+            # we select the context to use accordingly if it's a multicurrency case or not
+            context = self._sel_context(cr, uid, voucher.id, context)
+            # But for the operations made by _convert_amount, we always need to give the date in the context
+            ctx = context.copy()
+            ctx.update({'date': voucher.date})
+            # Create the account move record.
+            move_id = move_pool.create(cr, uid, self.account_move_get(cr, uid, voucher.id, context=context), context=context)
+            # Get the name of the account_move just created
+            name = move_pool.browse(cr, uid, move_id, context=context).name
+	    retention_total = 0
+	    for retention in self.pool.get('payment.retention').browse(cr,uid,voucher.retention_ids,context=context):
+		    dict_move_line = self.first_move_line_get(cr,uid,voucher.id, move_id, company_currency, current_currency, context)	
+		    if voucher.type == 'sale':
+		    	account_id = retention.id.tax_id.account_paid_id.id
+			dict_move_line['crebit'] = 0
+			dict_move_line['debit'] = retention.id.amount
+		    else:
+		    	account_id = retention.id.tax_id.account_collected_id.id
+			dict_move_line['crebit'] = retention.id.amount
+			dict_move_line['debit'] = 0
+		    amount = 
+		    dict_move_line['account_id'] = account_id
+		    if retention.id.amount:
+			    retention_total = retention_total +  retention.id.amount
+		    move_line_id = move_line_pool.create(cr,uid,dict_move_line,context)
+		    import pdb;pdb.set_trace()
+            # Create the first line of the voucher
+	    """
+            move_line_id = move_line_pool.create(cr, uid, self.first_move_line_get(cr,uid,voucher.id, move_id, company_currency, current_currency, context), context)
+            move_line_brw = move_line_pool.browse(cr, uid, move_line_id, context=context)
+            line_total = move_line_brw.debit - move_line_brw.credit
+            rec_list_ids = []
+            if voucher.type == 'sale':
+                line_total = line_total - self._convert_amount(cr, uid, voucher.tax_amount, voucher.id, context=ctx)
+            elif voucher.type == 'purchase':
+                line_total = line_total + self._convert_amount(cr, uid, voucher.tax_amount, voucher.id, context=ctx)
+            # Create one move line per voucher line where amount is not 0.0
+            line_total, rec_list_ids = self.voucher_move_line_create(cr, uid, voucher.id, line_total, move_id, company_currency, current_currency, context)
+	    """
+
+
+
+        return super(account_voucher, self).proforma_voucher(cr, uid, ids, context=context)
+	
+
 account_voucher()
 

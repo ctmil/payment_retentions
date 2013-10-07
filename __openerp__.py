@@ -27,7 +27,7 @@
     'author': 'Moldeo Interactive',
     'website': 'http://business.moldeo.coop/',
     'images': [],
-    'depends': ['account_voucher'],
+    'depends': ['account','account_voucher'],
     'demo': [],
     'data': ['payment_retention_view.xml'],
     # 'data': [],

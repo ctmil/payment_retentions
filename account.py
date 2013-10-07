@@ -33,3 +33,25 @@ class account_tax(osv.osv):
 
 account_tax()
 
+class account_fiscal_position_retention(osv.osv):
+
+	_name = 'account.fiscal.position.retention'
+	_description = 'Allowed taxes in retention'
+
+	_columns = {
+		'position_id': fields.many2one('account.fiscal.position','Fiscal position'),
+		'retention_tax_id': fields.many2one('account.tax','Tax')
+		}
+
+account_fiscal_position_retention()
+
+class account_fiscal_position(osv.osv):
+
+    _name = 'account.fiscal.position'
+    _inherit = 'account.fiscal.position'
+
+    _columns = {
+	'tax_retention_ids': fields.one2many('account.fiscal.position.retention','retention_tax_id','Allowed Tax Ids in Retentions')
+    }
+
+account_fiscal_position()

@@ -24,27 +24,60 @@
 	    </field>
 	</record>
 
-	<record model="ir.ui.view" id="payment_retention_vendor_form_view">
-	    <field name="name">payment_retention_form.inherit</field>
-	    <field name="model">account.voucher</field>
-	    <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
-	    <field name="arch" type="xml">
-	      <notebook>
-                        <page string="Payment Retentions">
-                            <field name="retention_ids" >
-                              <tree string="Payment Retentions" editable="bottom">
-                                    <field name="certificate_nbr" />
-                                    <field name="amount" />
-				    <field name="tax_id" string="Tax"/>
-				    <field name="state_id" string="State"/>
-                                    <!-- field name="retention_agent" readonly="1" />
-                                    <field name="retention_agent_cuit" readonly="1" / -->
-                              </tree>
-			    </field>
-			</page>
-	      </notebook>
-	    </field>
-	</record>
 
-    </data>
+
+
+    <record model ="ir.ui.view" id="view_payment_retention_search">
+        <field name="name">payment.retention.search</field>
+        <field name="model">payment.retention</field>
+        <field name="arch" type="xml">
+            <search string="Payment Retention">
+                <field name="certificate_nbr" string="Certificate Number" filter_domain="[('certificate_nbr','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record model ="ir.ui.view" id="view_payment_retention_tree">
+        <field name="name">payment.retention.tree</field>
+        <field name="model">payment.retention</field>
+        <field name="arch" type="xml">
+		<tree string="Payment Retention" version="7.0">
+	              <field name="certificate_nbr" />
+        	      <field name="amount" />
+		      <field name="tax_id" string="Tax"/>
+		      <field name="state_id" string="State"/>
+		      <field name="voucher_id" string="Voucher ID" />	
+		</tree>
+	</field>
+    </record>
+
+    <record model ="ir.ui.view" id="view_payment_retention_form">
+        <field name="name">payment.retention.form</field>
+        <field name="model">payment.retention</field>
+        <field name="arch" type="xml">
+		<form string="Payment Retention" version="7.0">
+		   <group>
+	              <field name="certificate_nbr" string="Certificate Number" />
+        	      <field name="amount" string="Amount" />
+		      <field name="tax_id" string="Tax"/>
+		      <field name="state_id" string="State"/>
+		      <field name="voucher_id" string="Voucher ID" />	
+		   </group>
+		</form>
+	</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_payment_retention">
+        <field name="name">Payment Retention</field>
+        <field name="res_model">payment.retention</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_payment_retention_tree" />
+        <!-- field name="search_view_id" ref="view_payment_retention_search" / -->
+    </record>
+
+    <menuitem name="Payment Retentions" parent="account.menu_finance_entries" id="menu_payment_retention" action="action_payment_retention" 
+		sequence="7" />
+
+   </data>
 </openerp>

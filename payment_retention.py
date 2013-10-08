@@ -51,7 +51,8 @@ class payment_retention(osv.osv):
 	'retention_agent': fields.function(_get_retention_agent,string='Retention Agent'),
 	'retention_agent_cuit': fields.function(_get_retention_agent_cuit,string='Retention Agent VAT'),
 	'tax_id': fields.many2one('account.tax','id','Tax ID'),
-	'state_id': fields.many2one('res.country.state','id','State ID')
+	'state_id': fields.many2one('res.country.state','id','State ID'),
+        'comment': fields.text('Additional Information'),
     }
 
 payment_retention()

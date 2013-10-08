@@ -55,7 +55,7 @@
         <field name="name">payment.retention.form</field>
         <field name="model">payment.retention</field>
         <field name="arch" type="xml">
-		<form string="Payment Retention" version="7.0">
+		<form string="Payment Retention" version="7.0" col="4">
 		   <group>
 	              <field name="certificate_nbr" string="Certificate Number" />
         	      <field name="amount" string="Amount" />
@@ -63,6 +63,9 @@
 		      <field name="state_id" string="State"/>
 		      <field name="voucher_id" string="Voucher ID" />	
 		   </group>
+                   <div class="oe_clear">
+                           <label for="comment"/>
+                   </div>
 		</form>
 	</field>
     </record>
